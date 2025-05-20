@@ -9,7 +9,7 @@ import { Leaf } from '~/leaf';
 import type { CustomEditor, CustomElement, RootElement, ToolbarOptions } from '~/types';
 import { serialize, deserialize } from '~/helper/convert';
 import { handleEnterOrBackspaceOnEmptyListItem, handleHeadingBreakline, handleHotKey, handleLinkBreakline } from '~/helper/key-handler';
-import '~/styles.css';
+import './styles.css';
 
 type RichTextFieldProps = {
   value: RootElement | '' | null;

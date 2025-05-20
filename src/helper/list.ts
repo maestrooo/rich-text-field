@@ -37,8 +37,7 @@ export function toggleList(editor: CustomEditor, listType: ListElement['listType
   Editor.withoutNormalizing(editor, () => {
     // 1) unwrap any existing lists
     Transforms.unwrapNodes(editor, {
-      match: (n) =>
-        Element.isElement(n) && n.type === 'list',
+      match: (n) => Element.isElement(n) && n.type === 'list',
       split: true,
     });
 
@@ -46,19 +45,20 @@ export function toggleList(editor: CustomEditor, listType: ListElement['listType
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'list-item' },
-      {
-        match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
-      }
+      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
     );
 
     // 3) if we’re activating, wrap and then merge with siblings
     if (!isActive) {
+      // Unwrap any paragraph parents so our list-items are at root
+      Transforms.unwrapNodes(editor, {
+        match: n => Element.isElement(n) && n.type === 'paragraph',
+        split: true,
+      });
+      
       // wrap the now-list-item(s) in a fresh <list>
-      const wrapper: ListElement = {
-        type: 'list',
-        listType,
-        children: [],
-      };
+      const wrapper: ListElement = { type: 'list', listType, children: [] };
+      
       Transforms.wrapNodes(editor, wrapper, {
         match: (n) =>
           Element.isElement(n) && (n.type as string) === 'list-item',

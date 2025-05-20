@@ -1,6 +1,5 @@
-import { Transforms, Element, Editor } from "slate";
+import { Transforms, Element, Editor, Text } from "slate";
 import type { CustomEditor, CustomElementType, HeadingElement } from "~/types";
-import { isListActive } from "~/helper/list";
 
 export function isFormattingActive(editor: CustomEditor, format: CustomElementType, headingLevel?: number): boolean {
   const { selection } = editor;
@@ -52,47 +51,45 @@ export function getActiveFormatting(editor: CustomEditor): { type: string, level
   }
 }
 
-export function toggleFormatting(editor: CustomEditor, format: CustomElementType, headingLevel?: HeadingElement['level']) {
-  if (isListActive(editor) && format === 'paragraph') {
-    // If we're in a list we don't do any change when toggling a paragraph
+export function toggleFormatting(editor: CustomEditor, format: CustomElementType, headingLevel?: HeadingElement["level"]) {
+  const match = Editor.above(editor, {
+    at: editor.selection!,
+    match: n => Element.isElement(n) && (n.type === 'heading' || n.type === 'paragraph' || n.type === 'list-item'),
+    mode: 'lowest'
+  });
+
+  if (!match) {
     return;
   }
 
-  // 1) change the block (paragraph ↔ heading)
-  let newProps: Partial<Element> =
-    format === 'heading' && headingLevel
-      ? { type: 'heading', level: headingLevel }
-      : { type: 'paragraph' }
+  // If we have a have a paragraph and we are already a paragraph, we do nothing
+  const [node, path] = match;
 
-  Transforms.setNodes<Element>(editor, { level: undefined, ...newProps });
+  if (node.type === 'paragraph' && format === 'paragraph') {
+    return;
+  }
 
-  // 2) if we just made a heading and it got lifted out of <li>, wrap it back in
-  if (format === 'heading' && isListActive(editor)) {
-    const [headingEntry] = Editor.nodes(editor, {
-      at: editor.selection!,
-      match: n =>
-        Element.isElement(n) && n.type === 'heading',
-      mode: 'highest',
-    });
-
-    const [, headingPath] = headingEntry
-
-    // check if that heading is already inside an <li>
-    const listItemAbove = Editor.above(editor, {
-      at: headingPath,
-      match: n =>
-        Element.isElement(n) && n.type === 'list-item',
-    })
-
-    if (headingEntry && !listItemAbove) {
-      const [, headingPath] = headingEntry
-
-      // wrap that heading into a new <li>
+  // If we transform to a heading, as per Shopify rules, it must be inside a paragraph, so we insert a new node
+  if (format === 'heading' && headingLevel != null) {
+    // If currently a paragraph, then we wrap it in the paragraph
+    if (node.type === 'paragraph' || node.type === 'list-item') {
       Transforms.wrapNodes(
-        editor,
-        { type: 'list-item', children: [] },
-        { at: headingPath }
+        editor, 
+        { type: 'heading', level: headingLevel, children: [] },
+        { at: path, match: n => Text.isText(n), split: true }
       )
+    } else {
+      // If we are already a heading, we just update the level
+      Transforms.setNodes(editor, { level: headingLevel }, { at: path });
     }
+  }
+
+  // If we are a heading and that we transform back to a paragraph, we have to unwrap the heading to just keep the paragraph
+  if (format === 'paragraph') {
+    Transforms.unwrapNodes(editor, {
+      at: path,
+      match: n => Element.isElement(n) && n.type === 'heading',
+      split: true,
+    });
   }
 }

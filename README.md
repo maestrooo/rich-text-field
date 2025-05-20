@@ -14,6 +14,8 @@ The `RichTextField` component provides a streamlined way to edit Shopify **rich 
 npm i @maestrooo/rich-text-field
 ```
 
+This library uses [Slate](https://www.slatejs.org) under the hood (which is the same library that Shopify uses for their own rich text field editor, ensuring we get a consistent experience).
+
 ---
 
 ## 🛠️ Usage

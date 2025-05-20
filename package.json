@@ -1,6 +1,6 @@
 {
   "name": "@maestrooo/rich-text-field",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "A component to manage Shopify rich text field metafields.",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -10,8 +10,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "test": "vitest run",
-    "dev": "vite"
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
@@ -29,24 +28,25 @@
   "homepage": "https://github.com/maestrooo/rich-text-field#readme",
   "peerDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
     "@shopify/app-bridge-react": "^4.0",
     "@shopify/polaris": "^13.7",
     "@shopify/polaris-icons": "^9.0",
-    "is-hotkey": "^0.2.0",
+    "is-hotkey-esm": "^1.0.0",
     "slate": "0.114.0",
-    "slate-react": "^0.114.2",
-    "slate-history": "^0.113.1"
+    "slate-history": "^0.113.1",
+    "slate-react": "^0.114.2"
   },
   "devDependencies": {
-    "@types/is-hotkey": "^0.1.10",
     "@shopify/app-bridge-react": "^4.0",
     "@shopify/polaris": "^13.7",
     "@shopify/polaris-icons": "^9.0",
-    "is-hotkey": "^0.2.0",
-    "slate": "0.114.0",
-    "slate-react": "^0.114.2",
-    "slate-history": "^0.113.1",
+    "@types/is-hotkey": "^0.1.10",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",

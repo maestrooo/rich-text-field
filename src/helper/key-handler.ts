@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from "react";
 import { Editor, Element, Node, Transforms, Path, Point, Range } from "slate";
-import isHotkey from "is-hotkey";
-import type { CustomEditor, CustomTextKey } from "~/types";
+import { isHotkey } from "is-hotkey-esm";
+import type { CustomEditor, CustomTextKey, ListItemElement, ParagraphElement } from "~/types";
 import { toggleMark } from "~/helper/mark";
 
 const HOTKEYS: Record<string, CustomTextKey> = {
@@ -64,58 +64,55 @@ export function handleHeadingBreakline(editor: CustomEditor): boolean {
     return false;
   }
 
-  // 1) If we're in a heading, split + turn into paragraph
-  const heading = Editor.above(editor, {
-    match: n =>
-      !Editor.isEditor(n) &&
-      Element.isElement(n) &&
-      n.type === 'heading',
+  const match = Editor.above(editor, {
+    at: editor.selection!,
+    match: n => Element.isElement(n) && (n.type === 'heading' || n.type === 'list-item'),
+    mode: 'highest'
   });
 
-  if (!heading) {
+  if (!match) {
     return false;
   }
 
-  const [, headingPath] = heading
+  const [, matchingPath] = match;
 
-  // Is the cursor at the very end of that heading?
-  const endOfHeading = Editor.end(editor, headingPath);
+  // 2) Only fire if the caret is exactly at the end of that heading
+  const endOfHeading = Editor.end(editor, matchingPath);
 
   if (!Point.equals(selection.anchor, endOfHeading)) {
     return false;
   }
 
-  // Are we inside a list-item?
-  const [, liPath] = Editor.above(editor, {
-    match: n => Element.isElement(n) && n.type === 'list-item',
-  })!;
-
-  if (liPath) {
-    // 1) Split the list item
-    Transforms.splitNodes(editor, {
-      match: n => Element.isElement(n) && n.type === 'list-item',
-      always: true,
-    });
-
-    // 2) Compute the path of the *new* list-item
-    const newLiPath = Path.next(liPath);
-
-    // 3) Remove the auto-inserted heading child
-    Transforms.removeNodes(editor, { at: [...newLiPath, 0] });
-
-    // 4) Insert a bare text node
-    Transforms.insertNodes(editor, { text: '' }, { at: [...newLiPath, 0] });
-
-    // 5) Move the cursor into that new text node
-    Transforms.select(editor, Editor.start(editor, [...newLiPath, 0]));
+  // 3) If the element we are matching is a list item, we have to create a new list item with an empty paragraph
+  if (match[0].type === 'list-item') {
+    Transforms.insertNodes(editor, { type: 'list-item', children: [{ text: '' }] }, { at: Path.next(matchingPath) });
+    Transforms.select(editor, Editor.start(editor, Path.next(matchingPath).concat(0)));
 
     return true;
   }
 
-  // Fallback: not in a list, so do the normal heading→paragraph split
-  Transforms.splitNodes(editor, { always: true });
-  Transforms.unsetNodes(editor, 'level');
-  Transforms.setNodes(editor, { type: 'paragraph' });
+  // 4) Find the paragraph that wraps this heading
+  const paraEntry = Editor.above(editor, {
+    at: matchingPath,
+    match: n =>
+      Element.isElement(n) && n.type === 'paragraph',
+  });
+
+  if (!paraEntry) {
+    return false;
+  }
+
+  const [, paraPath] = paraEntry;
+
+  // 5) Insert a brand-new empty paragraph AFTER that paragraph
+  const newParagraph = { type: 'paragraph', children: [{ text: '' }] } as ParagraphElement;
+  Transforms.insertNodes(editor, newParagraph, {
+    at: Path.next(paraPath),
+  });
+
+  // 6) Move the cursor into the new paragraph’s text node
+  const newPath = Path.next(paraPath).concat(0);
+  Transforms.select(editor, Editor.start(editor, newPath));
 
   return true;
 }
@@ -131,35 +128,46 @@ export function handleLinkBreakline(editor: CustomEditor): boolean {
   }
 
   const linkEntry = Editor.above(editor, {
+    at: selection,
     match: n =>
       !Editor.isEditor(n) &&
       Element.isElement(n) &&
       n.type === 'link',
   });
 
-  if (linkEntry) {
-    const [, linkPath] = linkEntry;
-    const end = Editor.end(editor, linkPath);
-
-    if (Point.equals(selection.anchor, end)) {
-      // split out a new block
-      Transforms.splitNodes(editor, { always: true });
-
-      // unwrap that link wrapper
-      Transforms.unwrapNodes(editor, {
-        match: n =>
-          !Editor.isEditor(n) &&
-          Element.isElement(n) &&
-          n.type === 'link',
-        split: true,
-      });
-
-      // and force the new block to be a paragraph
-      Transforms.setNodes(editor, { type: 'paragraph' });
-
-      return true;
-    }
+  if (!linkEntry) {
+    return false;
   }
 
-  return false;
+  const [, linkPath] = linkEntry;
+
+  // only fire if the cursor is at the very end of that link
+  const endOfLink = Editor.end(editor, linkPath);
+
+  if (!Point.equals(selection.anchor, endOfLink)) {
+    return false;
+  }
+
+  const entry = Editor.above(editor, {
+    at: linkPath,
+    match: n => Element.isElement(n) && (n.type === 'paragraph' || n.type === 'list-item'),
+  });
+
+  if (!entry) {
+    return false;
+  }
+
+  const [, entryPath] = entry;
+
+  // 4) Insert a brand-new empty paragraph _after_ it
+  const newParagraph = { type: entry[0].type, children: [{ text: '' }] } as (ParagraphElement | ListItemElement);
+  Transforms.insertNodes(editor, newParagraph, {
+    at: Path.next(entryPath),
+  });
+
+  // 5) Move the cursor into that empty paragraph
+  const newPath = Path.next(entryPath).concat(0);
+  Transforms.select(editor, Editor.start(editor, newPath));
+
+  return true;
 }

@@ -70,7 +70,14 @@ export function Element({ attributes, children, element }: RenderElementProps) {
         </Popover>
       )
     
-    default:
+    case 'paragraph':
+      // In Shopify rich text structure, the heading are nested inside a paragraph, but as this is invalid HTML,
+      // we need to check if the element contains a heading and, if it does, only render the children
+      
+      if (element.children.length >= 1 && element.children[0].type === 'heading') {
+        return <>{ children }</>;
+      }
+
       return (
         <p {...attributes}>
           {children}
