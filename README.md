@@ -6,6 +6,8 @@ The `RichTextField` component provides a streamlined way to edit Shopify **rich 
 
 > 🚫 This component relies on the Shopify App Bridge modal and can **only** be used inside an embedded Shopify app that uses **App Bridge v4**.
 
+<img width="604" alt="image" src="https://github.com/user-attachments/assets/e0ac6b15-61c9-4444-aef9-a7270d266199" />
+
 ---
 
 ## 📦 Installation
