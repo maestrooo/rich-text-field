@@ -1,6 +1,6 @@
 {
   "name": "@maestrooo/rich-text-field",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A component to manage Shopify rich text field metafields.",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -27,16 +27,26 @@
     "url": "https://github.com/maestrooo/rich-text-field/issues"
   },
   "homepage": "https://github.com/maestrooo/rich-text-field#readme",
-  "dependencies": {
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "@shopify/app-bridge-react": "^4.0",
     "@shopify/polaris": "^13.7",
     "@shopify/polaris-icons": "^9.0",
     "is-hotkey": "^0.2.0",
+    "slate": "0.114.0",
     "slate-react": "^0.114.2",
     "slate-history": "^0.113.1"
   },
   "devDependencies": {
     "@types/is-hotkey": "^0.1.10",
+    "@shopify/app-bridge-react": "^4.0",
+    "@shopify/polaris": "^13.7",
+    "@shopify/polaris-icons": "^9.0",
+    "is-hotkey": "^0.2.0",
+    "slate": "0.114.0",
+    "slate-react": "^0.114.2",
+    "slate-history": "^0.113.1",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
