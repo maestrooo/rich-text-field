@@ -1,0 +1,45 @@
+{
+  "name": "polaris-rich-text-field",
+  "version": "1.0.0",
+  "description": "A component to manage Shopify rich text field metafields.",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maestrooo/polaris-rich-text-field.git"
+  },
+  "keywords": [
+    "graphql",
+    "builder"
+  ],
+  "author": "Michael Gallego",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maestrooo/polaris-rich-text-field/issues"
+  },
+  "homepage": "https://github.com/maestrooo/polaris-rich-text-field#readme",
+  "dependencies": {
+    "@shopify/app-bridge-react": "^4.0",
+    "@shopify/polaris": "^13.7",
+    "@shopify/polaris-icons": "^9.0",
+    "is-hotkey": "^0.2.0",
+    "slate-react": "^0.114.2",
+    "slate-history": "^0.113.1"
+  },
+  "devDependencies": {
+    "@types/is-hotkey": "^0.1.10",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.3"
+  }
+}

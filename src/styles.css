@@ -1,0 +1,159 @@
+.RichTextField__Toolbar {
+  padding: var(--p-space-100);
+  background: var(--p-color-bg-surface-secondary);
+  border: var(--p-border-width-0165) solid var(--p-color-input-border);
+  border-block-end: none;
+  border-radius: var(--p-border-radius-200) var(--p-border-radius-200) 0 0;
+}
+
+.RichTextField__Toolbar .Polaris-Button {
+  display: block;
+  margin: 0;
+  padding: var(--p-space-050);
+  border-radius: var(--p-border-radius-200);
+}
+
+.RichTextField__Toolbar .Polaris-Button .Polaris-Icon__Svg {
+  transition: all 0.2s ease-in-out;
+}
+
+.RichTextField__Toolbar .Polaris-Button {
+  --pc-button-icon-fill: var(--p-color-text-secondary) !important;
+}
+
+:where(.RichTextField:hover, .RichTextField:focus-within) .RichTextField__Toolbar .Polaris-Button:not([aria-pressed="true"]) {
+  --pc-button-icon-fill: var(--p-color-icon) !important;
+}
+
+.RichTextField__Toolbar .Polaris-Button:hover {
+  --pc-button-icon-fill: var(--p-color-icon) !important;
+
+  background-color: var(--p-color-bg-fill-transparent-secondary);
+}
+
+.RichTextField__Toolbar .Polaris-Button[aria-pressed="true"] {
+  --pc-button-icon-fill: var(--p-color-text-emphasis) !important;
+  --pc-button-icon-fill_hover: var(--p-color-bg-fill-emphasis-hover) !important;
+
+  background-color: var(--p-color-bg-fill-transparent-active);
+}
+
+.RichTextField__Toolbar .Polaris-Button[aria-pressed="true"]:hover {
+  background-color: var(--p-color-bg-fill-transparent-hover);
+}
+
+.RichTextField__ToolbarFormattingActivator > .Polaris-Button {
+  display: flex;
+  align-items: center;
+}
+
+.RichTextField__ToolbarFormattingActivator .Polaris-Button__Icon {
+  margin: 0;
+}
+
+.RichTextField__ToolbarFormattingPopover .Polaris-Listbox-Option {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: var(--p-space-100) var(--p-space-400);
+  cursor: pointer;
+}
+
+.RichTextField__ToolbarFormattingPopover .Polaris-Listbox-Option[aria-selected="true"] {
+  background: var(--p-color-bg-surface-brand-selected);
+}
+
+.RichTextField__ToolbarFormattingPopover .Polaris-Listbox-Option:hover,
+.RichTextField__ToolbarFormattingPopover .Polaris-Listbox-Option[data-focused="true"] {
+  background: var(--p-color-bg-surface-hover);
+}
+
+.RichTextField__Textbox {
+  position: relative;
+  min-height: 100px;
+  padding: var(--p-space-150) var(--p-space-300);
+  background: var(--p-color-input-bg-surface);
+  border: var(--p-border-width-0165) solid var(--p-color-input-border);
+  border-radius: 0 0 var(--p-border-radius-200) var(--p-border-radius-200);
+  white-space: pre-wrap;
+}
+
+.RichTextField__Textbox [data-slate-placeholder] {
+  inset-inline-start: 0;
+  padding: var(--p-space-150) var(--p-space-300);
+}
+
+.RichTextField__Textbox:not(.RichTextField__Textbox--error):hover {
+  background: var(--p-color-input-bg-surface-hover);
+}
+
+.RichTextField__Textbox:not(.RichTextField__Textbox--error):focus {
+  background: var(--p-color-input-bg-surface-active);
+  border-color: var(--p-color-input-border-active);
+  box-shadow: 0 0 0 2px var(--p-color-border-focus);
+  outline: none;
+}
+
+.RichTextField__Textbox--error {
+  background: var(--p-color-bg-surface-critical);
+  border-color: var(--p-color-border-critical-secondary);
+}
+
+.RichTextField__Textbox :is(ol, ul) {
+  padding: 0;
+  padding-inline-start: var(--p-space-400);
+}
+
+.RichTextField__Textbox > * {
+  margin-block: var(--p-space-200);
+}
+
+.RichTextField__Textbox > *:first-child {
+  margin-block-start: 0;
+}
+
+.RichTextField__Textbox > *:last-child {
+  margin-block-end: 0;
+}
+
+.RichTextField__Textbox h1 {
+  font-size: var(--p-text-heading-2xl-font-size);
+  font-weight: var(--p-text-heading-2xl-font-weight);
+  letter-spacing: var(--p-text-heading-2xl-font-letter-spacing);
+  line-height: var(--p-text-heading-2xl-font-line-height);
+}
+
+.RichTextField__Textbox h2 {
+  font-size: var(--p-text-heading-xl-font-size);
+  font-weight: var(--p-text-heading-xl-font-weight);
+  letter-spacing: var(--p-text-heading-xl-font-letter-spacing);
+  line-height: var(--p-text-heading-xl-font-line-height);
+}
+
+.RichTextField__Textbox h3 {
+  font-size: var(--p-text-heading-lg-font-size);
+  font-weight: var(--p-text-heading-lg-font-weight);
+  letter-spacing: var(--p-text-heading-lg-font-letter-spacing);
+  line-height: var(--p-text-heading-lg-font-line-height);
+}
+
+.RichTextField__Textbox h4 {
+  font-size: var(--p-text-heading-md-font-size);
+  font-weight: var(--p-text-heading-md-font-weight);
+  letter-spacing: var(--p-text-heading-md-font-letter-spacing);
+  line-height: var(--p-text-heading-md-font-line-height);
+}
+
+.RichTextField__Textbox h5 {
+  font-size: var(--p-text-heading-sm-font-size);
+  font-weight: var(--p-text-heading-sm-font-weight);
+  letter-spacing: var(--p-text-heading-sm-font-letter-spacing);
+  line-height: var(--p-text-heading-sm-font-line-height);
+}
+
+.RichTextField__Textbox h6 {
+  font-size: var(--p-text-heading-xs-font-size);
+  font-weight: var(--p-text-heading-xs-font-weight);
+  letter-spacing: var(--p-text-heading-xs-font-letter-spacing);
+  line-height: var(--p-text-heading-xs-font-line-height);
+}
