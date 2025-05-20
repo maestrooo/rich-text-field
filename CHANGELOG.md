@@ -1,3 +1,7 @@
+## 1.0.7
+
+- Fix an issue with lists and heading
+
 ## 1.0.6
 
 - Fix an issue where a heading could be nested inside a paragraph, which is not allowed.
