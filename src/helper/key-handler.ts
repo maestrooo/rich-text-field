@@ -91,27 +91,14 @@ export function handleHeadingBreakline(editor: CustomEditor): boolean {
     return true;
   }
 
-  // 4) Find the paragraph that wraps this heading
-  const paraEntry = Editor.above(editor, {
-    at: matchingPath,
-    match: n =>
-      Element.isElement(n) && n.type === 'paragraph',
-  });
-
-  if (!paraEntry) {
-    return false;
-  }
-
-  const [, paraPath] = paraEntry;
-
-  // 5) Insert a brand-new empty paragraph AFTER that paragraph
+  // 4) Insert a brand-new empty paragraph AFTER
   const newParagraph = { type: 'paragraph', children: [{ text: '' }] } as ParagraphElement;
   Transforms.insertNodes(editor, newParagraph, {
-    at: Path.next(paraPath),
+    at: Path.next(matchingPath),
   });
 
   // 6) Move the cursor into the new paragraph’s text node
-  const newPath = Path.next(paraPath).concat(0);
+  const newPath = Path.next(matchingPath).concat(0);
   Transforms.select(editor, Editor.start(editor, newPath));
 
   return true;

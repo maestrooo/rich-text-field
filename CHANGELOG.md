@@ -1,3 +1,7 @@
+## 1.0.8
+
+- Fix an issue where the heading would not be converted to a paragraph after hitting enter.
+
 ## 1.0.7
 
 - Fix an issue with lists and heading
