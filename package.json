@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maestrooo/polaris-rich-text-field.git"
+    "url": "git+https://github.com/maestrooo/rich-text-field.git"
   },
   "keywords": [
     "graphql",
@@ -24,9 +24,9 @@
   "author": "Michael Gallego",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maestrooo/polaris-rich-text-field/issues"
+    "url": "https://github.com/maestrooo/rich-text-field/issues"
   },
-  "homepage": "https://github.com/maestrooo/polaris-rich-text-field#readme",
+  "homepage": "https://github.com/maestrooo/rich-text-field#readme",
   "dependencies": {
     "@shopify/app-bridge-react": "^4.0",
     "@shopify/polaris": "^13.7",
