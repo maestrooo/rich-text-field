@@ -1,6 +1,6 @@
 {
-  "name": "polaris-rich-text-field",
-  "version": "1.0.0",
+  "name": "@maestrooo/rich-text-field",
+  "version": "1.0.1",
   "description": "A component to manage Shopify rich text field metafields.",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",

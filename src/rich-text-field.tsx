@@ -12,7 +12,7 @@ import { handleEnterOrBackspaceOnEmptyListItem, handleHeadingBreakline, handleHo
 import '~/styles.css';
 
 type RichTextFieldProps = {
-  value: RootElement | '';
+  value: RootElement | '' | null;
   toolbarOptions?: ToolbarOptions[];
   label?: string;
   error?: string | string[];
