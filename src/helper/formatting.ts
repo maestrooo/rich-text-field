@@ -69,10 +69,11 @@ export function toggleFormatting(editor: CustomEditor, format: CustomElementType
     return;
   }
 
-  // If we transform to a heading, as per Shopify rules, it must be inside a paragraph, so we insert a new node
+  // Transform to heading
   if (format === 'heading' && headingLevel != null) {
     // If currently a paragraph, then we wrap it in the paragraph
-    if (node.type === 'paragraph' || node.type === 'list-item') {
+    if (node.type === 'list-item') {
+      Transforms.setNodes(editor, { level: undefined }, { at: path });
       Transforms.wrapNodes(
         editor, 
         { type: 'heading', level: headingLevel, children: [] },
@@ -80,7 +81,7 @@ export function toggleFormatting(editor: CustomEditor, format: CustomElementType
       )
     } else {
       // If we are already a heading, we just update the level
-      Transforms.setNodes(editor, { level: headingLevel }, { at: path });
+      Transforms.setNodes(editor, { type: 'heading', level: headingLevel }, { at: path });
     }
   }
 

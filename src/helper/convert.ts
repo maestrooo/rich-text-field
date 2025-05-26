@@ -1,4 +1,4 @@
-import { type Descendant, Text, Element } from 'slate';
+import { type Descendant, Text, Element, Node } from 'slate';
 import type { RootElement } from '~/types';
 
 /**
@@ -8,7 +8,9 @@ import type { RootElement } from '~/types';
  * - Leaf nodes have type of "text" with a value propery
  */
 export function serialize(nodes: Descendant[]): RootElement | '' {
-  if (nodes.length === 0) {
+  const renderedValue = nodes.map(node => Node.string(node)).join('').trim();
+
+  if (renderedValue === '') {
     return '';
   }
 

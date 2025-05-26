@@ -1,3 +1,12 @@
+## 1.1.1
+
+- Fixed a bug where heading were incorrectly wrapped in a paragraph.
+- Better detect when a node is empty to serialize it as an empty string instead of a root with empty paragraph.
+
+## 1.1.0
+
+- Add a new `name` optional parameter. When specified, it will set the value as a string in a hidden input. This is useful if you are using Remix `Form`.
+
 ## 1.0.8
 
 - Fix an issue where the heading would not be converted to a paragraph after hitting enter.

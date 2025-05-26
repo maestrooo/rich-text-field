@@ -16,6 +16,7 @@ type RichTextFieldProps = {
   toolbarOptions?: ToolbarOptions[];
   label?: string;
   error?: string | string[];
+  name?: string;
   helpText?: string;
   placeholder?: string;
   onChange: (value: RootElement | '') => void;
@@ -30,7 +31,7 @@ const withInlines = (editor: CustomEditor) => {
   return editor;
 }
 
-export function RichTextField({ value, toolbarOptions, label, error, helpText, placeholder, onChange }: RichTextFieldProps) {
+export function RichTextField({ value, toolbarOptions, label, error, name, helpText, placeholder, onChange }: RichTextFieldProps) {
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -126,6 +127,10 @@ export function RichTextField({ value, toolbarOptions, label, error, helpText, p
             label && (
               <label htmlFor={fieldId} className="RichTextField__Label">{ label }</label>
             )
+          }
+          
+          {
+            name && <input type="hidden" name={name} value={value ? '' : JSON.stringify(value)} />
           }
 
           <div>
