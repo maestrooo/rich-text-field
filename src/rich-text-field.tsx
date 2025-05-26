@@ -130,7 +130,7 @@ export function RichTextField({ value, toolbarOptions, label, error, name, helpT
           }
           
           {
-            name && <input type="hidden" name={name} value={value ? '' : JSON.stringify(value)} />
+            name && <input type="hidden" name={name} value={value ? JSON.stringify(value) : ''} />
           }
 
           <div>
