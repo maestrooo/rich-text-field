@@ -87,10 +87,6 @@ export function toggleFormatting(editor: CustomEditor, format: CustomElementType
 
   // If we are a heading and that we transform back to a paragraph, we have to unwrap the heading to just keep the paragraph
   if (format === 'paragraph') {
-    Transforms.unwrapNodes(editor, {
-      at: path,
-      match: n => Element.isElement(n) && n.type === 'heading',
-      split: true,
-    });
+    Transforms.setNodes(editor, { type: 'paragraph', level: undefined }, { at: path });
   }
 }

@@ -1,3 +1,7 @@
+## 1.1.3
+
+- Fixed an issue when converting from heading to paragraph.
+
 ## 1.1.1
 
 - Fixed a bug where heading were incorrectly wrapped in a paragraph.
