@@ -4,7 +4,8 @@ The `RichTextField` component provides a streamlined way to edit Shopify **rich 
 
 > ⚠️ This is **not** a general-purpose rich text editor. It is specifically designed for editing **Shopify metafields of type `rich_text_field`**, not for generating arbitrary HTML.
 
-> Since version 2, this libray uses [Polaris web components](https://shopify.dev/docs/api/app-home).
+> Since version 2, this library uses [Polaris Web Components](https://shopify.dev/docs/api/app-home). Please note that Polaris Web Components are not yet officially released, so you may encounter breaking changes. If you are still using the older Polaris React, consider sticking with version 1.
+
 
 <img width="604" alt="image" src="https://github.com/user-attachments/assets/e0ac6b15-61c9-4444-aef9-a7270d266199" />
 
@@ -66,3 +67,14 @@ export default function MyComponent() {
 
 - You can use `metafield.jsonValue` or `metafield.value` as the value.
 - When the value is empty, the library will return an empty string (``) and not an empty object. This happens because Shopify expects an empty string to clear a rich text metafield.
+
+## Known limitations
+
+There are currently some styling inconsistencies caused by missing features in Polaris Web Components. Specifically:
+
+- When certain formatting is active (e.g., bold or italic), the corresponding buttons do not appear as “pressed.” [Issue](https://community.shopify.dev/t/adding-a-pressed-prop-for-buttons/21786)  
+- When a heading level (H1, H2, H3, etc.) is selected, a generic “title” icon is shown. Polaris Web Components currently lack dedicated icons for each heading level and do not support custom icons. [Issue](https://community.shopify.dev/t/adding-new-icons/21788)  
+- Formatting icons appear darker than other icons. This happens because buttons do not support disclosure icons, so we are forced to use a different component, leading to inconsistency. [Issue](https://community.shopify.dev/t/add-support-for-disclosure-buttons/21789)  
+- Labels and help text are displayed larger than in Polaris Web Component form fields. [Issue](https://community.shopify.dev/t/adding-a-small-text-paragraph-variant/21791)
+
+Those issues will be fixed when Polaris Web Components will be improved.
