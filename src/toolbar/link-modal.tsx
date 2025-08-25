@@ -1,11 +1,8 @@
-import { Box, FormLayout, TextField, Checkbox } from "@shopify/polaris";
 import { Modal, TitleBar } from "@shopify/app-bridge-react";
 import { Node, Editor } from "slate";
 import { ReactEditor, useSlate } from "slate-react";
 import { useCallback, useState } from "react";
 import { getActiveLink, insertLink, isLinkActive } from "~/helper/link";
-
-export const RICH_TEXT_FIELD_LINK_MODAL_ID = 'link-modal';
 
 type LinkState = {
   text: string;
@@ -13,6 +10,7 @@ type LinkState = {
   openInNewTab: boolean;
 }
 
+export const RICH_TEXT_FIELD_LINK_MODAL_ID = 'rich-text-field-link-modal';
 const INITIAL_LINK_STATE: LinkState = { text: '', url: '', openInNewTab: false };
 
 export function LinkModal() {
@@ -67,31 +65,28 @@ export function LinkModal() {
         <button onClick={() => shopify.modal.hide(RICH_TEXT_FIELD_LINK_MODAL_ID)}>Cancel</button>
       </TitleBar>
 
-      <Box padding="300">
-        <FormLayout>
-          <TextField
-            label='Text'
-            value={link.text}
-            onChange={onChange("text")}
-            autoComplete="off"
-          />
+      <s-section>
+        <s-text-field 
+          label="Text" 
+          value={link.text} 
+          onInput={(event) => onChange("text")(event.currentTarget.value)} 
+          autocomplete="off"
+        ></s-text-field>
 
-          <TextField
-            label='Link'
-            type='url'
-            helpText='https:// is required for external links'
-            value={link.url}
-            onChange={onChange('url')}
-            autoComplete='off'
-          />
-
-          <Checkbox
-            label='Open this link in a new tab'
-            checked={link.openInNewTab}
-            onChange={onChange('openInNewTab')}
-          />
-        </FormLayout>
-      </Box>
+        <s-url-field 
+          label="Link" 
+          details="https:// is required for external links"
+          value={link.url}
+          onInput={(event) => onChange("url")(event.currentTarget.value)} 
+          autocomplete="off"
+        ></s-url-field>
+          
+        <s-checkbox 
+          label="Open this link in a new tab" 
+          checked={link.openInNewTab} 
+          onChange={(event) => onChange("openInNewTab")(event.currentTarget.checked)}
+        ></s-checkbox>
+      </s-section>
     </Modal>
   )
 }

@@ -1,3 +1,14 @@
+## 2.0.0
+
+- This library now uses [Polaris web components](https://shopify.dev/docs/api/app-home), meaning it no longer relies on Polaris React. This improves the performance and visual consistency of the library. If you are using an existing app, make sure that you are loading Polaris web components.
+- `onChange` now receives an input event rather than the value, to align its behavior with Polaris web components.
+- `onBlur`, `onFocus` and `onInput` events have been added.
+- `helpText` has been renamed to `details` to align with Polaris web components.
+
+## 1.1.4
+
+- Add support for React 19
+
 ## 1.1.3
 
 - Fixed an issue when converting from heading to paragraph.

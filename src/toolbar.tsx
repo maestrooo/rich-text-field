@@ -1,5 +1,3 @@
-import { InlineStack } from "@shopify/polaris";
-import { ListBulletedIcon, ListNumberedIcon, TextBoldIcon, TextItalicIcon } from "@shopify/polaris-icons";
 import { MarkButton } from "~/toolbar/mark-button";
 import { type ToolbarOptions } from "~/types";
 import { FormattingButton } from "~/toolbar/formatting-button";
@@ -12,8 +10,8 @@ type ToolbarProps = {
 
 export function Toolbar({ options }:  ToolbarProps) {
   return (
-    <div className="RichTextField__Toolbar">
-      <InlineStack gap="100" blockAlign="center">
+    <s-box padding="small-400" background="subdued" border="base" borderColor="strong" borderWidth="base base none base" borderRadius="base base none none">
+      <s-stack direction="inline" gap="small-400">
         {
           options.includes('formatting') && (
             <FormattingButton />
@@ -22,13 +20,13 @@ export function Toolbar({ options }:  ToolbarProps) {
 
         {
           options.includes('bold') && (
-            <MarkButton format="bold" icon={ TextBoldIcon } />
+            <MarkButton format="bold" />
           )
         }
 
         {
           options.includes('italic') && (
-            <MarkButton format="italic" icon={ TextItalicIcon } />
+            <MarkButton format="italic" />
           )
         }
 
@@ -40,16 +38,16 @@ export function Toolbar({ options }:  ToolbarProps) {
 
         {
           options.includes('unordered-list') && (
-            <ListButton listType="unordered" icon={ ListBulletedIcon } />
+            <ListButton listType="unordered" />
           )
         }
 
         {
           options.includes('ordered-list') && (
-            <ListButton listType="ordered" icon={ ListNumberedIcon } />
+            <ListButton listType="ordered" />
           )
         }
-      </InlineStack>
-    </div>
+      </s-stack>
+    </s-box>
   )
 }

@@ -1,38 +1,37 @@
-import { type FunctionComponent, type PointerEvent, useCallback } from "react";
-import { Button, Tooltip } from "@shopify/polaris";
+import { type PointerEvent, useCallback, useId } from "react";
 import { useFocused, useSlate } from "slate-react";
 import { type ListElement } from "~/types";
 import { isListActive, toggleList } from "~/helper/list";
 
 type ListButtonProps = {
   listType: ListElement['listType'];
-  icon: FunctionComponent;
 }
 
-export function ListButton({ listType, icon }: ListButtonProps) {
+export function ListButton({ listType }: ListButtonProps) {
   const editor = useSlate();
   const focused = useFocused();
   const isActive = isListActive(editor, listType) && focused;
+  const tooltipId = useId();
 
-  const handlePointerDown = useCallback((event: PointerEvent<HTMLSpanElement>) => {
+  const handleOnClick = useCallback((event: PointerEvent<HTMLSpanElement>) => {
     event.preventDefault();
     toggleList(editor, listType);
   }, [editor, listType]);
 
-  const tooltipMap = {
-    'unordered': 'Bullet list',
-    'ordered': 'Numbered list'
-  }
-
   return (
-    <Tooltip content={tooltipMap[listType]}>
-      <Button
-        variant="plain"
+    <>
+      <s-button 
+        onClick={handleOnClick}
+        variant="tertiary"
+        interestFor={tooltipId}
+        icon={ listType === 'unordered' ? 'list-bulleted' : 'list-numbered' }
         accessibilityLabel={isActive ? 'Remove list' : 'Add list'}
-        pressed={isActive}
-        onPointerDown={handlePointerDown}
-        icon={icon}
-      />
-    </Tooltip>
+      >
+      </s-button>
+
+      <s-tooltip id={tooltipId}>
+        <s-text>{ listType === 'unordered' ? 'Bullet list' : 'Numbered list' }</s-text>
+      </s-tooltip>
+    </>
   )
 }

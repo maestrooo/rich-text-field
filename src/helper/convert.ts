@@ -37,9 +37,13 @@ export function serialize(nodes: Descendant[]): RootElement | '' {
 /**
  * Deserialize Shopify value to Slate value. If it is empty, we use an empty paragraph
  */
-export function deserialize(node: RootElement | '' | null): Descendant[] {
+export function deserialize(node: RootElement | '' | string | null): Descendant[] {
   if (!node) {
     return [{ type: 'paragraph', children: [{ text: '' }] }];
+  }
+
+  if (typeof node === 'string') {
+    node = JSON.parse(node) as RootElement;
   }
   
   const convertNode = (node: any): Descendant => {

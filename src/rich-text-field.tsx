@@ -1,8 +1,7 @@
-import { Text, InlineError, BlockStack } from '@shopify/polaris';
-import { type KeyboardEvent, useCallback, useEffect, useId, useMemo } from 'react';
+import { type KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { type Descendant, createEditor } from 'slate';
 import { withHistory } from 'slate-history';
-import { Editable, type RenderElementProps, type RenderLeafProps, Slate, withReact } from 'slate-react';
+import { Editable, ReactEditor, type RenderElementProps, type RenderLeafProps, Slate, withReact } from 'slate-react';
 import { Toolbar } from '~/toolbar';
 import { Element } from '~/element';
 import { Leaf } from '~/leaf';
@@ -17,9 +16,12 @@ type RichTextFieldProps = {
   label?: string;
   error?: string | string[];
   name?: string;
-  helpText?: string;
+  details?: string;
   placeholder?: string;
-  onChange: (value: RootElement | '') => void;
+  onChange?: (event: React.ChangeEvent<HTMLDivElement>) => void;
+  onInput?: (event: React.ChangeEvent<HTMLDivElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
 }
 
 const withInlines = (editor: CustomEditor) => {
@@ -31,7 +33,7 @@ const withInlines = (editor: CustomEditor) => {
   return editor;
 }
 
-export function RichTextField({ value, toolbarOptions, label, error, name, helpText, placeholder, onChange }: RichTextFieldProps) {
+export function RichTextField({ value, toolbarOptions, label, error, name, details, placeholder, onChange, onInput, onBlur, onFocus }: RichTextFieldProps) {
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -42,11 +44,21 @@ export function RichTextField({ value, toolbarOptions, label, error, name, helpT
     []
   );
 
-  const editor = useMemo(() => withInlines(withHistory(withReact(createEditor()))) as CustomEditor, []);
+  const [editor] = useState(() => withInlines(withHistory(withReact(createEditor()))) as CustomEditor);
+  const hiddenFieldRef = useRef<HTMLInputElement>(null!);
   const fieldId = useId();
   const initialValue = useMemo<Descendant[]>(() => deserialize(value), []);
 
   const options = toolbarOptions || ['formatting', 'bold', 'italic', 'link', 'ordered-list', 'unordered-list'];
+
+  useEffect(() => {
+    if (hiddenFieldRef.current) {
+      hiddenFieldRef.current.addEventListener('change', (event: Event) => {
+        onChange?.(event as unknown as React.ChangeEvent<HTMLInputElement>);
+        onInput?.(event as unknown as React.ChangeEvent<HTMLInputElement>);
+      });
+    }
+  }, [hiddenFieldRef.current]);
 
   /**
    * Slate input is not controlled, so if the value changes (for instance when we hit reset), we have to change
@@ -115,30 +127,32 @@ export function RichTextField({ value, toolbarOptions, label, error, name, helpT
     );
     
     if (isAstChange) {
-      onChange(serialize(newValue));
+      const serializeValue = serialize(newValue);
+      hiddenFieldRef.current.value = serializeValue ? JSON.stringify(serializeValue) : '';
+      hiddenFieldRef.current.dispatchEvent(new Event('change', { bubbles: true }));
     }
   }
 
   return (
-    <Slate editor={editor} initialValue={initialValue} onChange={handleOnChange}>
-      <div className="RichTextField">
-        <BlockStack gap="100">
+    <s-box paddingBlockEnd="small-100">
+      <Slate editor={editor} initialValue={initialValue} onChange={handleOnChange}>
+        <s-stack gap="small-400">
           {
             label && (
-              <label htmlFor={fieldId} className="RichTextField__Label">{ label }</label>
+              <s-text color="subdued">
+                <label htmlFor={fieldId} onClick={() => ReactEditor.focus(editor)}>{ label }</label>
+              </s-text>
             )
           }
-          
-          {
-            name && <input type="hidden" name={name} value={value ? JSON.stringify(value) : ''} />
-          }
 
-          <div>
+          <input type="hidden" ref={hiddenFieldRef} name={name} value={typeof value === 'string' ? value : JSON.stringify(value)} />
+
+          <s-stack>
             <Toolbar options={options} />
 
             <Editable
               id={fieldId}
-              className={`RichTextField__Textbox ${error ? 'RichTextField__Textbox--error' : ''}`}
+              className={`RichTextField ${error ? 'RichTextField--error' : ''}`}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
               disableDefaultStyles
@@ -146,22 +160,29 @@ export function RichTextField({ value, toolbarOptions, label, error, name, helpT
               spellCheck
               autoFocus={false}
               onKeyDown={handleOnKeyDown}
+              onBlur={onBlur}
+              onFocus={onFocus}
             />
-          </div>
+          </s-stack>
 
           {
-            helpText && (
-              <Text variant="bodyMd" tone="subdued" as="p">{ helpText }</Text>
+            (details && !error) && (
+              <s-paragraph color="subdued">{ details }</s-paragraph>
             )
           }
     
           {
             error && (
-              <InlineError message={error} fieldID={fieldId} />
+              <s-paragraph tone="critical">
+                <s-stack direction="inline" gap="small-400" alignItems="center" aria-live="polite">
+                  <s-icon size="small" type="alert-circle"></s-icon>
+                  <s-text>{ error }</s-text>
+                </s-stack>
+              </s-paragraph>
             )
           }
-        </BlockStack>
-      </div>
-    </Slate>
+        </s-stack>
+      </Slate>
+    </s-box>
   )
 }

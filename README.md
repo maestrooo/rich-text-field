@@ -4,7 +4,7 @@ The `RichTextField` component provides a streamlined way to edit Shopify **rich 
 
 > ⚠️ This is **not** a general-purpose rich text editor. It is specifically designed for editing **Shopify metafields of type `rich_text_field`**, not for generating arbitrary HTML.
 
-> 🚫 This component relies on the Shopify App Bridge modal and can **only** be used inside an embedded Shopify app that uses **App Bridge v4**.
+> Since version 2, this libray uses [Polaris web components](https://shopify.dev/docs/api/app-home).
 
 <img width="604" alt="image" src="https://github.com/user-attachments/assets/e0ac6b15-61c9-4444-aef9-a7270d266199" />
 
@@ -18,6 +18,9 @@ npm i @maestrooo/rich-text-field
 
 This library uses [Slate](https://www.slatejs.org) under the hood (which is the same library that Shopify uses for their own rich text field editor, ensuring we get a consistent experience).
 
+This library relies on [Polaris Web Components](https://shopify.dev/docs/api/app-home) under the hood.  
+To use it correctly, make sure you load Polaris Web Components [following the official instructions](https://shopify.dev/docs/api/app-home#getting-started).
+
 ---
 
 ## 🛠️ Usage
@@ -30,6 +33,7 @@ import { RichTextField } from "@maestrooo/rich-text-field";
 export default function MyComponent() {
   return (
     <RichTextField 
+      name="description"
       value={metafield.jsonValue} 
       onChange={(newValue) => doSomething(newValue)} 
     />
@@ -43,18 +47,22 @@ export default function MyComponent() {
 
 | Prop            | Type                                                                 | Required | Description                                                                 |
 |-----------------|----------------------------------------------------------------------|----------|-----------------------------------------------------------------------------|
-| `value`         | `object \| string \| null`                                           | ✅       | The current metafield value. Use `metafield.jsonValue`, **not** a stringified value. |
-| `onChange`      | `(value: object \| string) => void`                                  | ✅       | Callback triggered whenever the content changes. Returns a JSON object or an empty string. |
+| `value`         | `object \| string \| null`                                           | ✅       | The current metafield value. Use `metafield.jsonValue` or a stringified value of the JSON. |
+| `onChange`      | `(event: ChangeEvent) => void`                                  | ❌       | Callback triggered whenever the content changes. Returns a change event. You can retrieve the value using `event.currentTarget.value` |
+| `onInput`      | `(event: ChangeEvent) => void`                                  | ❌       | Callback triggered whenever the content changes. Returns a change event. You can retrieve the value using `event.currentTarget.value` |
+| `onBlur`      | `(event: FocusEvent) => void`                                  | ❌       | Callback triggered when the field is blurred |
+| `onFocus`      | `(event: FocusEvent) => void`                                  | ❌       | Callback triggered when the field is focused |
 | `toolbarOptions`| `Array<'formatting' \| 'bold' \| 'italic' \| 'link' \| 'ordered-list' \| 'unordered-list'>` | ❌       | Controls which tools are available in the toolbar.                         |
 | `label`         | `string`                                                             | ❌       | Optional label for the field.                                              |
-| `helpText`      | `string`                                                             | ❌       | Optional help text displayed below the field.                              |
+| `details`      | `string`                                                             | ❌       | Optional details text displayed below the field.                              |
 | `placeholder`   | `string`                                                             | ❌       | Placeholder text shown when the field is empty.                            |
 | `error`         | `string`                                                             | ❌       | Optional error message displayed below the field.                          |
+
+> As of today, `onChange` and `onInput` behave the same way: the `onChange` event is triggered on every keystroke. This is a limitation of the Slate library, which does not distinguish between the two.
 
 ---
 
 ## ⚠️ Notes
 
-- Ensure you pass the **parsed JSON object** (or `""`/`null`), **not** the raw string value of the metafield.
-- We recommend using `metafield.jsonValue` as the input.
-- The `onChange` callback returns either the updated JSON structure or an empty string when the content is cleared.
+- You can use `metafield.jsonValue` or `metafield.value` as the value.
+- When the value is empty, the library will return an empty string (``) and not an empty object. This happens because Shopify expects an empty string to clear a rich text metafield.

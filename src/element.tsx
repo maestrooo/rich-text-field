@@ -1,13 +1,13 @@
-import { Box, Button, Icon, InlineStack, Link, Popover } from "@shopify/polaris";
-import { createElement, useCallback, useEffect, useState } from "react";
+import { createElement, useCallback, useEffect, useId, useState } from "react";
 import { type RenderElementProps, useFocused, useSelected, useSlate } from "slate-react";
-import { ExternalIcon } from "@shopify/polaris-icons";
 import { removeLink } from "~/helper/link";
+import { RICH_TEXT_FIELD_LINK_MODAL_ID } from "./toolbar/link-modal";
 
 export function Element({ attributes, children, element }: RenderElementProps) {
   const selected = useSelected();
   const focused = useFocused();
   const editor = useSlate();
+  const linkPopoverId = useId();
   const [isLinkPopoverActive, setIsLinkPopoverActive] = useState(false);
 
   useEffect(() => {
@@ -39,16 +39,43 @@ export function Element({ attributes, children, element }: RenderElementProps) {
       )
 
     case 'link':
-      const activator = (
-        <a href={element.url} target={element.target} style={{ pointerEvents: 'none' }} {...attributes}>
-          {children}
-        </a>
-      );
-      
       const link = element.url.length > 30 ? element.url.slice(0, 30) + '...' : element.url;
 
       return (
-        <Popover 
+        <>
+          <s-link command="--toggle" commandFor={linkPopoverId} {...attributes}>
+            {children}
+          </s-link>
+
+          <s-popover id={linkPopoverId}>
+            <s-box padding="small-200">
+              <s-stack direction="inline" alignItems="center" gap="base">
+                <s-stack direction="inline" gap="small-400">
+                  <s-icon type="external" tone="info"></s-icon>
+                  <s-link href={element.url} target="_blank">{ link }</s-link>
+                </s-stack>
+
+                <s-stack direction="inline" alignItems="center" gap="small-400">
+                  <s-button onClick={() => shopify.modal.show(RICH_TEXT_FIELD_LINK_MODAL_ID)} variant="secondary" icon="edit">Edit</s-button>
+                  <s-button onClick={() => removeLink(editor)} variant="secondary" tone="critical" icon="delete">Delete</s-button>
+                </s-stack>
+              </s-stack>
+            </s-box>
+          </s-popover>
+        </>
+      )
+    
+    case 'paragraph':
+      return (
+        <p {...attributes}>
+          {children}
+        </p>
+      )
+  }
+}
+
+/**
+ * <Popover 
           autofocusTarget="none" 
           activator={activator} 
           preferredPosition="below" 
@@ -63,18 +90,9 @@ export function Element({ attributes, children, element }: RenderElementProps) {
                   <Icon source={ExternalIcon} />{ link }
                 </InlineStack>
               </Link>
-              <Button onClick={() => shopify.modal.show('link-modal' )} variant="plain">Edit</Button>
+              <Button onClick={() => shopify.modal.show(RICH_TEXT_FIELD_LINK_MODAL_ID)} variant="plain">Edit</Button>
               <Button onClick={() => removeLink(editor)} variant="plain" tone="critical">Remove</Button>
             </InlineStack>
           </Box>
         </Popover>
-      )
-    
-    case 'paragraph':
-      return (
-        <p {...attributes}>
-          {children}
-        </p>
-      )
-  }
-}
+ */
