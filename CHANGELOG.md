@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Align label, details and error font size with Polaris (for now, it hard codes the font size, hopefully Polaris will add a native way in the future).
+
 ## 2.0.0
 
 - This library now uses [Polaris web components](https://shopify.dev/docs/api/app-home), meaning it no longer relies on Polaris React. This improves the performance and visual consistency of the library. If you are using an existing app, make sure that you are loading Polaris web components.

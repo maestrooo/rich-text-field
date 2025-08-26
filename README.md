@@ -75,6 +75,5 @@ There are currently some styling inconsistencies caused by missing features in P
 - When certain formatting is active (e.g., bold or italic), the corresponding buttons do not appear as “pressed.” [Issue](https://community.shopify.dev/t/adding-a-pressed-prop-for-buttons/21786)  
 - When a heading level (H1, H2, H3, etc.) is selected, a generic “title” icon is shown. Polaris Web Components currently lack dedicated icons for each heading level and do not support custom icons. [Issue](https://community.shopify.dev/t/adding-new-icons/21788)  
 - Formatting icons appear darker than other icons. This happens because buttons do not support disclosure icons, so we are forced to use a different component, leading to inconsistency. [Issue](https://community.shopify.dev/t/add-support-for-disclosure-buttons/21789)  
-- Labels and help text are displayed larger than in Polaris Web Component form fields. [Issue](https://community.shopify.dev/t/adding-a-small-text-paragraph-variant/21791)
 
 Those issues will be fixed when Polaris Web Components will be improved.

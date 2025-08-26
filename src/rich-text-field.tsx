@@ -140,7 +140,7 @@ export function RichTextField({ value, toolbarOptions, label, error, name, detai
           {
             label && (
               <s-text color="subdued">
-                <label htmlFor={fieldId} onClick={() => ReactEditor.focus(editor)}>{ label }</label>
+                <label style={{ fontSize: '0.75rem' }} htmlFor={fieldId} onClick={() => ReactEditor.focus(editor)}>{ label }</label>
               </s-text>
             )
           }
@@ -167,7 +167,7 @@ export function RichTextField({ value, toolbarOptions, label, error, name, detai
 
           {
             (details && !error) && (
-              <s-paragraph color="subdued">{ details }</s-paragraph>
+              <s-paragraph color="subdued"><span style={{ fontSize: '0.75rem' }}>{ details }</span></s-paragraph>
             )
           }
     
@@ -176,7 +176,7 @@ export function RichTextField({ value, toolbarOptions, label, error, name, detai
               <s-paragraph tone="critical">
                 <s-stack direction="inline" gap="small-400" alignItems="center" aria-live="polite">
                   <s-icon size="small" type="alert-circle"></s-icon>
-                  <s-text>{ error }</s-text>
+                  <s-text><span style={{ fontSize: '0.75rem' }}>{ error }</span></s-text>
                 </s-stack>
               </s-paragraph>
             )
