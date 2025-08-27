@@ -1,3 +1,20 @@
+## 2.0.5
+
+- Add a chevron next to the formatting button.
+- Improve the rendering of formatting list options.
+
+## 2.0.4
+
+- Ensure that focus is properly restored after using the mark or list buttons.
+
+## 2.0.3
+
+- Improve typing.
+
+## 2.0.2
+
+- Improve rendering of formatting options.
+
 ## 2.0.1
 
 - Align label, details and error font size with Polaris (for now, it hard codes the font size, hopefully Polaris will add a native way in the future).

@@ -3,16 +3,6 @@ import { ReactEditor, useFocused, useSlate } from "slate-react";
 import type { CustomElementType, HeadingElement } from "~/types";
 import { getActiveFormatting, isFormattingActive, toggleFormatting } from "~/helper/formatting";
 
-const ICON_MAP: Record<string, any> = {
-  'paragraph': 'text-font',
-  'heading-1': 'text-title',
-  'heading-2': 'text-title',
-  'heading-3': 'text-title',
-  'heading-4': 'text-title',
-  'heading-5': 'text-title',
-  'heading-6': 'text-title',
-};
-
 const LABEL_MAP: Record<string, any> = {
   'paragraph': 'Paragraph',
   'heading-1': 'Heading 1',
@@ -53,37 +43,35 @@ export function FormattingButton() {
 
   return (
     <>
-      <s-clickable
-        background="subdued"
-        borderRadius="base"
+      <s-button
+        variant="tertiary"
         accessibilityLabel="Change formatting"
         interestFor={tooltipId}
         commandFor="rich-text-field-formatting-menu"
         command="--toggle"
-        type="button"
       >
-        <s-stack direction="inline">
-          <s-icon type={ICON_MAP[currentStyle]}></s-icon>
-          <s-icon type="chevron-down"></s-icon>
-        </s-stack>
-      </s-clickable>
+        <s-text>{ LABEL_MAP[currentStyle] }</s-text>
+        <s-icon type="chevron-down" size="small"></s-icon>
+      </s-button>
 
       <s-popover ref={popoverRef} id="rich-text-field-formatting-menu">
-        <s-box padding="small-200">
-          <s-stack gap="small-400">
-            <s-button variant="tertiary" onClick={() => handleOnSelect('paragraph')} selected={isFormattingActive(editor, 'paragraph')}>Paragraph</s-button>
-            <s-button variant="tertiary" onClick={() => handleOnSelect('heading-1')} selected={isFormattingActive(editor, 'heading-1')}>Heading 1</s-button>
-            <s-button variant="tertiary" onClick={() => handleOnSelect('heading-2')} selected={isFormattingActive(editor, 'heading-2')}>Heading 2</s-button>
-            <s-button variant="tertiary" onClick={() => handleOnSelect('heading-3')} selected={isFormattingActive(editor, 'heading-3')}>Heading 3</s-button>
-            <s-button variant="tertiary" onClick={() => handleOnSelect('heading-4')} selected={isFormattingActive(editor, 'heading-4')}>Heading 4</s-button>
-            <s-button variant="tertiary" onClick={() => handleOnSelect('heading-5')} selected={isFormattingActive(editor, 'heading-5')}>Heading 5</s-button>
-            <s-button variant="tertiary" onClick={() => handleOnSelect('heading-6')} selected={isFormattingActive(editor, 'heading-6')}>Heading 6</s-button>
-          </s-stack>
-        </s-box>
+        <s-clickable borderRadius="large large none none" minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('paragraph')} background={isFormattingActive(editor, 'paragraph') ? 'subdued' : 'base'}>Paragraph</s-clickable>
+        <s-divider></s-divider>
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-1')} background={isFormattingActive(editor, 'heading-1') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '1.875rem', lineHeight: 1 }}>Heading 1</span></s-text></s-clickable>
+        <s-divider></s-divider>
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-2')} background={isFormattingActive(editor, 'heading-2') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '1.5rem', lineHeight: 1 }}>Heading 2</span></s-text></s-clickable>
+        <s-divider></s-divider>
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-3')} background={isFormattingActive(editor, 'heading-3') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '1.25rem', lineHeight: 1 }}>Heading 3</span></s-text></s-clickable>
+        <s-divider></s-divider>
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-4')} background={isFormattingActive(editor, 'heading-4') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '0.875rem', lineHeight: 1 }}>Heading 4</span></s-text></s-clickable>
+        <s-divider></s-divider>
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-5')} background={isFormattingActive(editor, 'heading-5') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '0.8125rem', lineHeight: 1 }}>Heading 5</span></s-text></s-clickable>
+        <s-divider></s-divider>
+        <s-clickable borderRadius="none none large large" minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-6')} background={isFormattingActive(editor, 'heading-6') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '0.75rem', lineHeight: 1 }}>Heading 6</span></s-text></s-clickable>
       </s-popover>
 
       <s-tooltip id={tooltipId}>
-        <s-text>{LABEL_MAP[currentStyle]}</s-text>
+        <s-text>Formatting</s-text>
       </s-tooltip>
     </>
   );

@@ -1,5 +1,6 @@
-import { type PointerEvent, useCallback, useId } from "react";
-import { useFocused, useSlate } from "slate-react";
+import { useCallback, useId } from "react";
+import type { CallbackEvent } from "@shopify/app-bridge-ui-types";
+import { ReactEditor, useFocused, useSlate } from "slate-react";
 import { type CustomTextKey } from "~/types";
 import { isMarkActive, toggleMark } from "~/helper/mark";
 
@@ -13,9 +14,10 @@ export function MarkButton({ format }: MarkButtonProps) {
   const isActive = isMarkActive(editor, format) && focused;
   const tooltipId = useId();
 
-  const handleOnClick = useCallback((event: PointerEvent<HTMLSpanElement>) => {
+  const handleOnClick = useCallback((event: CallbackEvent<'s-button'>) => {
     event.preventDefault();
     toggleMark(editor, format);
+    ReactEditor.focus(editor);
   }, [editor, format]);
 
   return (
