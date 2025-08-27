@@ -55,19 +55,66 @@ export function FormattingButton() {
       </s-button>
 
       <s-popover ref={popoverRef} id="rich-text-field-formatting-menu">
-        <s-clickable borderRadius="large large none none" minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('paragraph')} background={isFormattingActive(editor, 'paragraph') ? 'subdued' : 'base'}>Paragraph</s-clickable>
+        <s-clickable borderRadius="large large none none" minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('paragraph')} background={isFormattingActive(editor, 'paragraph') ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'paragraph') && <s-icon type="check" size="small"></s-icon> }
+            <s-paragraph>Paragraph</s-paragraph>
+          </s-stack>
+        </s-clickable>
+
         <s-divider></s-divider>
-        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-1')} background={isFormattingActive(editor, 'heading-1') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '1.875rem', lineHeight: 1 }}>Heading 1</span></s-text></s-clickable>
+
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('heading-1')} background={isFormattingActive(editor, 'heading', 1) ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'heading', 1) && <s-icon type="check" size="small"></s-icon> }
+            <s-heading><span style={{ fontSize: '1.875rem', lineHeight: 1 }}>Heading 1</span></s-heading>
+          </s-stack>
+        </s-clickable>
+        
         <s-divider></s-divider>
-        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-2')} background={isFormattingActive(editor, 'heading-2') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '1.5rem', lineHeight: 1 }}>Heading 2</span></s-text></s-clickable>
+
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('heading-2')} background={isFormattingActive(editor, 'heading', 2) ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'heading', 2) && <s-icon type="check" size="small"></s-icon> }
+            <s-heading><span style={{ fontSize: '1.5rem', lineHeight: 1 }}>Heading 2</span></s-heading>
+          </s-stack>
+        </s-clickable>
+        
         <s-divider></s-divider>
-        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-3')} background={isFormattingActive(editor, 'heading-3') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '1.25rem', lineHeight: 1 }}>Heading 3</span></s-text></s-clickable>
+        
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('heading-3')} background={isFormattingActive(editor, 'heading', 3) ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'heading', 3) && <s-icon type="check" size="small"></s-icon> }
+            <s-heading><span style={{ fontSize: '1.25rem', lineHeight: 1 }}>Heading 3</span></s-heading>
+          </s-stack>
+        </s-clickable>
+        
         <s-divider></s-divider>
-        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-4')} background={isFormattingActive(editor, 'heading-4') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '0.875rem', lineHeight: 1 }}>Heading 4</span></s-text></s-clickable>
+        
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('heading-4')} background={isFormattingActive(editor, 'heading', 4) ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'heading', 4) && <s-icon type="check" size="small"></s-icon> }
+            <s-heading><span style={{ fontSize: '0.875rem', lineHeight: 1 }}>Heading 4</span></s-heading>
+          </s-stack>
+        </s-clickable>
+        
         <s-divider></s-divider>
-        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-5')} background={isFormattingActive(editor, 'heading-5') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '0.8125rem', lineHeight: 1 }}>Heading 5</span></s-text></s-clickable>
+        
+        <s-clickable minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('heading-5')} background={isFormattingActive(editor, 'heading', 5) ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'heading', 5) && <s-icon type="check" size="small"></s-icon> }
+            <s-heading><span style={{ fontSize: '0.8125rem', lineHeight: 1 }}>Heading 5</span></s-heading>
+          </s-stack>
+        </s-clickable>
+        
         <s-divider></s-divider>
-        <s-clickable borderRadius="none none large large" minBlockSize="40px" minInlineSize="100%" paddingInline="small-200" onClick={() => handleOnSelect('heading-6')} background={isFormattingActive(editor, 'heading-6') ? 'subdued' : 'base'}><s-text type="strong"><span style={{ fontSize: '0.75rem', lineHeight: 1 }}>Heading 6</span></s-text></s-clickable>
+        
+        <s-clickable borderRadius="none none large large" minBlockSize="40px" minInlineSize="100%" paddingInline="large" onClick={() => handleOnSelect('heading-6')} background={isFormattingActive(editor, 'heading', 6) ? 'subdued' : 'base'}>
+          <s-stack columnGap="small-200" alignItems="center">
+            { isFormattingActive(editor, 'heading', 6) && <s-icon type="check" size="small"></s-icon> }
+            <s-heading><span style={{ fontSize: '0.75rem', lineHeight: 1 }}>Heading 6</span></s-heading>
+          </s-stack>
+        </s-clickable>
       </s-popover>
 
       <s-tooltip id={tooltipId}>

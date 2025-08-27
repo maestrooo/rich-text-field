@@ -1,3 +1,7 @@
+## 2.0.6
+
+- Improve formatting
+
 ## 2.0.5
 
 - Add a chevron next to the formatting button.

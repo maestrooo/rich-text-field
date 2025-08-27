@@ -72,7 +72,6 @@ export default function MyComponent() {
 
 There are currently some styling inconsistencies caused by missing features in Polaris Web Components. Specifically:
 
-- When certain formatting is active (e.g., bold or italic), the corresponding buttons do not appear as “pressed.” [Issue](https://community.shopify.dev/t/adding-a-pressed-prop-for-buttons/21786)  
-- When a heading level (H1, H2, H3, etc.) is selected, a generic “title” icon is shown. Polaris Web Components currently lack dedicated icons for each heading level and do not support custom icons. [Issue](https://community.shopify.dev/t/adding-new-icons/21788)
+- When certain formatting is active (e.g., bold or italic), the corresponding buttons do not appear as “pressed.” [Issue](https://community.shopify.dev/t/adding-a-pressed-prop-for-buttons/21786)
 
 Those issues will be fixed when Polaris Web Components will be improved.

@@ -1,6 +1,6 @@
 {
   "name": "@maestrooo/rich-text-field",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A component to manage Shopify rich text field metafields.",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
