@@ -1,6 +1,10 @@
+## 2.0.7
+
+- Fix formatting popover alignment.
+
 ## 2.0.6
 
-- Improve formatting
+- Improve formatting.
 
 ## 2.0.5
 
