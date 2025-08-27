@@ -1,3 +1,7 @@
+## 2.0.8/2.0.9
+
+- Ensure that clicking on cancel/add button in link modal does not submit any form.
+
 ## 2.0.7
 
 - Fix formatting popover alignment.

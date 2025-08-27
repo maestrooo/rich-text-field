@@ -1,7 +1,7 @@
 import { Modal, TitleBar } from "@shopify/app-bridge-react";
 import { Node, Editor } from "slate";
 import { ReactEditor, useSlate } from "slate-react";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type MouseEventHandler, type ReactEventHandler } from "react";
 import { getActiveLink, insertLink, isLinkActive } from "~/helper/link";
 
 type LinkState = {
@@ -48,13 +48,20 @@ export function LinkModal() {
   );
 
   // On insert, we add the link and hide the modal
-  const handleInsert = useCallback(() => {
+  const handleInsert = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
     const target = link.openInNewTab ? '_blank' : '_self';
     insertLink(editor, link.url, link.text, target);
     ReactEditor.focus(editor);
     
     shopify.modal.hide(RICH_TEXT_FIELD_LINK_MODAL_ID);
-  }, [editor, link]);
+  }, [shopify, editor, link]);
+
+  const handleOnClose = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    shopify.modal.hide(RICH_TEXT_FIELD_LINK_MODAL_ID);
+  }, [shopify]);
 
   const canInsert = link.text.trim() !== '' && link.url.trim() !== '';
 
@@ -62,7 +69,7 @@ export function LinkModal() {
     <Modal id={RICH_TEXT_FIELD_LINK_MODAL_ID} onShow={onShowModal} onHide={onHideModal}>
       <TitleBar title={ isActive ? 'Edit link' : 'Insert link' }>
         <button variant="primary" onClick={handleInsert} disabled={!canInsert}>{ isActive ? 'Edit link' : 'Insert link' }</button>
-        <button onClick={() => shopify.modal.hide(RICH_TEXT_FIELD_LINK_MODAL_ID)}>Cancel</button>
+        <button onClick={handleOnClose}>Cancel</button>
       </TitleBar>
 
       <s-section>
