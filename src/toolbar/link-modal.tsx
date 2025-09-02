@@ -1,7 +1,7 @@
-import { Modal, TitleBar } from "@shopify/app-bridge-react";
+import { Modal, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { Node, Editor } from "slate";
 import { ReactEditor, useSlate } from "slate-react";
-import { useCallback, useState, type MouseEventHandler, type ReactEventHandler } from "react";
+import { useCallback, useState } from "react";
 import { getActiveLink, insertLink, isLinkActive } from "~/helper/link";
 
 type LinkState = {
@@ -14,6 +14,7 @@ export const RICH_TEXT_FIELD_LINK_MODAL_ID = 'rich-text-field-link-modal';
 const INITIAL_LINK_STATE: LinkState = { text: '', url: '', openInNewTab: false };
 
 export function LinkModal() {
+  const shopify = useAppBridge();
   const editor = useSlate();
   const [link, setLink] = useState<LinkState>(INITIAL_LINK_STATE);
   const isActive = isLinkActive(editor);

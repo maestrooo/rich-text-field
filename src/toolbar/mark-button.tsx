@@ -22,14 +22,15 @@ export function MarkButton({ format }: MarkButtonProps) {
 
   return (
     <>
-      <s-button 
+      <s-clickable 
+        padding="small-300 small-400" borderRadius="base"
+        background={ isActive ? 'strong' : 'subdued' }
         onClick={handleOnClick}
-        variant="tertiary"
         interestFor={tooltipId}
-        icon={ format === 'bold' ? 'text-bold' : 'text-italic' }
         accessibilityLabel={isActive ? 'Remove formatting' : 'Add formatting'}
       >
-      </s-button>
+        <s-icon type={format === 'bold' ? 'text-bold' : 'text-italic'}></s-icon>
+      </s-clickable>
 
       <s-tooltip id={tooltipId}>
         <s-text>{ format === 'bold' ? 'Bold' : 'Italic' }</s-text>

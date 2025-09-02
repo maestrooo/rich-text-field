@@ -22,14 +22,15 @@ export function ListButton({ listType }: ListButtonProps) {
 
   return (
     <>
-      <s-button 
+      <s-clickable
+        padding="small-300 small-400" borderRadius="base"
+        background={ isActive ? 'strong' : 'subdued' } 
         onClick={handleOnClick}
-        variant="tertiary"
         interestFor={tooltipId}
-        icon={ listType === 'unordered' ? 'list-bulleted' : 'list-numbered' }
         accessibilityLabel={isActive ? 'Remove list' : 'Add list'}
       >
-      </s-button>
+        <s-icon type={listType === 'unordered' ? 'list-bulleted' : 'list-numbered'}></s-icon>
+      </s-clickable>
 
       <s-tooltip id={tooltipId}>
         <s-text>{ listType === 'unordered' ? 'Bullet list' : 'Numbered list' }</s-text>

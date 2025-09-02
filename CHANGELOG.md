@@ -1,3 +1,11 @@
+## 2.0.11/2.0.12
+
+- Add active states for selected formatting.
+
+## 2.0.10
+
+- Add a missing import for shopify app bridge.
+
 ## 2.0.8/2.0.9
 
 - Ensure that clicking on cancel/add button in link modal does not submit any form.

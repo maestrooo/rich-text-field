@@ -13,13 +13,15 @@ export function LinkButton() {
 
   return (
     <>
-      <s-button 
-        variant="tertiary"
-        icon="link"
+      <s-clickable 
+        padding="small-300 small-400" borderRadius="base"
+        background={ isActive ? 'strong' : 'subdued' }
         accessibilityLabel="Open link modal"
         interestFor={tooltipId}
         onClick={() => shopify.modal.show(RICH_TEXT_FIELD_LINK_MODAL_ID)}
-      ></s-button>
+      >
+        <s-icon type="link"></s-icon>
+      </s-clickable>
 
       <s-tooltip id={tooltipId}>
         <s-text>Link</s-text>

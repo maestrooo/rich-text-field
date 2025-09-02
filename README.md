@@ -67,11 +67,3 @@ export default function MyComponent() {
 
 - You can use `metafield.jsonValue` or `metafield.value` as the value.
 - When the value is empty, the library will return an empty string (``) and not an empty object. This happens because Shopify expects an empty string to clear a rich text metafield.
-
-## Known limitations
-
-There are currently some styling inconsistencies caused by missing features in Polaris Web Components. Specifically:
-
-- When certain formatting is active (e.g., bold or italic), the corresponding buttons do not appear as “pressed.” [Issue](https://community.shopify.dev/t/adding-a-pressed-prop-for-buttons/21786)
-
-Those issues will be fixed when Polaris Web Components will be improved.
