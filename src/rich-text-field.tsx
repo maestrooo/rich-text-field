@@ -145,7 +145,7 @@ export function RichTextField({ value, toolbarOptions, label, error, name, detai
             )
           }
 
-          <input type="hidden" ref={hiddenFieldRef} name={name} value={typeof value === 'string' ? value : JSON.stringify(value)} />
+          <input type="hidden" ref={hiddenFieldRef} name={name} value={value ? (typeof value === 'string' ? value : JSON.stringify(value)) : ''} />
 
           <s-stack>
             <Toolbar options={options} />

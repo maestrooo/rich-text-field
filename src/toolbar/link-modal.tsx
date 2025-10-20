@@ -1,7 +1,7 @@
-import { Modal, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
+import type { CallbackEvent } from "@shopify/app-bridge-ui-types";
 import { Node, Editor } from "slate";
 import { ReactEditor, useSlate } from "slate-react";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { getActiveLink, insertLink, isLinkActive } from "~/helper/link";
 
 type LinkState = {
@@ -14,9 +14,9 @@ export const RICH_TEXT_FIELD_LINK_MODAL_ID = 'rich-text-field-link-modal';
 const INITIAL_LINK_STATE: LinkState = { text: '', url: '', openInNewTab: false };
 
 export function LinkModal() {
-  const shopify = useAppBridge();
   const editor = useSlate();
   const [link, setLink] = useState<LinkState>(INITIAL_LINK_STATE);
+  const modalRef = useRef<'s-modal' | null>(null);
   const isActive = isLinkActive(editor);
 
   // When the modal is shown, we have to detect if we already have a link selected, and retrieve the attributes
@@ -49,29 +49,22 @@ export function LinkModal() {
   );
 
   // On insert, we add the link and hide the modal
-  const handleInsert = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleInsert = useCallback((event: CallbackEvent<'s-button'>) => {
     event.preventDefault();
 
     const target = link.openInNewTab ? '_blank' : '_self';
     insertLink(editor, link.url, link.text, target);
     ReactEditor.focus(editor);
     
-    shopify.modal.hide(RICH_TEXT_FIELD_LINK_MODAL_ID);
-  }, [shopify, editor, link]);
-
-  const handleOnClose = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    shopify.modal.hide(RICH_TEXT_FIELD_LINK_MODAL_ID);
-  }, [shopify]);
+    modalRef.current?.hideOverlay();
+  }, [editor, link]);
 
   const canInsert = link.text.trim() !== '' && link.url.trim() !== '';
 
   return (
-    <Modal id={RICH_TEXT_FIELD_LINK_MODAL_ID} onShow={onShowModal} onHide={onHideModal}>
-      <TitleBar title={ isActive ? 'Edit link' : 'Insert link' }>
-        <button variant="primary" onClick={handleInsert} disabled={!canInsert}>{ isActive ? 'Edit link' : 'Insert link' }</button>
-        <button onClick={handleOnClose}>Cancel</button>
-      </TitleBar>
+    <s-modal ref={modalRef} id={RICH_TEXT_FIELD_LINK_MODAL_ID} onShow={onShowModal} onHide={onHideModal} heading={ isActive ? 'Edit link' : 'Insert link' }>
+      <s-button slot="primary-action" variant="primary" onClick={handleInsert} disabled={!canInsert}>{ isActive ? 'Edit link' : 'Insert link' }</s-button>
+      <s-button slot="secondary-actions" commandFor={RICH_TEXT_FIELD_LINK_MODAL_ID} command="--hide">Cancel</s-button>
 
       <s-section>
         <s-text-field 
@@ -95,6 +88,6 @@ export function LinkModal() {
           onChange={(event) => onChange("openInNewTab")(event.currentTarget.checked)}
         ></s-checkbox>
       </s-section>
-    </Modal>
+    </s-modal>
   )
 }

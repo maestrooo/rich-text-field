@@ -1,11 +1,9 @@
-import { useAppBridge } from "@shopify/app-bridge-react";
 import { useId } from "react";
 import { useFocused, useSlate } from "slate-react";
 import { isLinkActive } from "~/helper/link";
 import { LinkModal, RICH_TEXT_FIELD_LINK_MODAL_ID } from "~/toolbar/link-modal";
 
 export function LinkButton() {
-  const shopify = useAppBridge();
   const editor  = useSlate();
   const focused = useFocused();
   const isActive = isLinkActive(editor) && focused;
@@ -18,9 +16,9 @@ export function LinkButton() {
         background={ isActive ? 'strong' : 'subdued' }
         accessibilityLabel="Open link modal"
         interestFor={tooltipId}
-        onClick={() => shopify.modal.show(RICH_TEXT_FIELD_LINK_MODAL_ID)}
+        commandFor={RICH_TEXT_FIELD_LINK_MODAL_ID}
       >
-        <s-icon type="link"></s-icon>
+        <s-icon type="link" tone={ isActive ? 'info' : 'auto' }></s-icon>
       </s-clickable>
 
       <s-tooltip id={tooltipId}>

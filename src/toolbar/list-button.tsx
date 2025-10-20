@@ -14,7 +14,7 @@ export function ListButton({ listType }: ListButtonProps) {
   const isActive = isListActive(editor, listType) && focused;
   const tooltipId = useId();
 
-  const handleOnClick = useCallback((event: CallbackEvent<'s-button'>) => {
+  const handleOnClick = useCallback((event: CallbackEvent<'s-clickable'>) => {
     event.preventDefault();
     toggleList(editor, listType);
     ReactEditor.focus(editor);
@@ -29,7 +29,7 @@ export function ListButton({ listType }: ListButtonProps) {
         interestFor={tooltipId}
         accessibilityLabel={isActive ? 'Remove list' : 'Add list'}
       >
-        <s-icon type={listType === 'unordered' ? 'list-bulleted' : 'list-numbered'}></s-icon>
+        <s-icon type={listType === 'unordered' ? 'list-bulleted' : 'list-numbered'} tone={ isActive ? 'info' : 'auto' }></s-icon>
       </s-clickable>
 
       <s-tooltip id={tooltipId}>

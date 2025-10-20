@@ -1,4 +1,12 @@
-## 2.0.11/2.0.12
+## 2.1.0
+
+- Modal has been switched to Polaris Web Components. This now makes the library no longer rely on any Polaris React components.
+
+## 2.0.14/2.0.15
+
+- Ensure null and undefined values are serialized as empty string in the hidden field.
+
+## 2.0.11/2.0.12/2.0.13
 
 - Add active states for selected formatting.
 

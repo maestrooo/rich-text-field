@@ -29,7 +29,7 @@ export function MarkButton({ format }: MarkButtonProps) {
         interestFor={tooltipId}
         accessibilityLabel={isActive ? 'Remove formatting' : 'Add formatting'}
       >
-        <s-icon type={format === 'bold' ? 'text-bold' : 'text-italic'}></s-icon>
+        <s-icon type={format === 'bold' ? 'text-bold' : 'text-italic'} tone={ isActive ? 'info' : 'auto' }></s-icon>
       </s-clickable>
 
       <s-tooltip id={tooltipId}>
