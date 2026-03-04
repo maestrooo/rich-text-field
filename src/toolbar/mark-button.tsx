@@ -6,7 +6,7 @@ import { isMarkActive, toggleMark } from "~/helper/mark";
 
 type MarkButtonProps = {
   format: CustomTextKey;
-}
+};
 
 export function MarkButton({ format }: MarkButtonProps) {
   const editor = useSlate();
@@ -14,27 +14,34 @@ export function MarkButton({ format }: MarkButtonProps) {
   const isActive = isMarkActive(editor, format) && focused;
   const tooltipId = useId();
 
-  const handleOnClick = useCallback((event: CallbackEvent<'s-button'>) => {
-    event.preventDefault();
-    toggleMark(editor, format);
-    ReactEditor.focus(editor);
-  }, [editor, format]);
+  const handleOnClick = useCallback(
+    (event: CallbackEvent<"s-button">) => {
+      event.preventDefault();
+      toggleMark(editor, format);
+      ReactEditor.focus(editor);
+    },
+    [editor, format],
+  );
 
   return (
-    <>
-      <s-clickable 
-        padding="small-300 small-400" borderRadius="base"
-        background={ isActive ? 'strong' : 'subdued' }
+    <s-box>
+      <s-clickable
+        padding="small-300 small-400"
+        borderRadius="base"
+        background={isActive ? "strong" : "subdued"}
         onClick={handleOnClick}
         interestFor={tooltipId}
-        accessibilityLabel={isActive ? 'Remove formatting' : 'Add formatting'}
+        accessibilityLabel={isActive ? "Remove formatting" : "Add formatting"}
       >
-        <s-icon type={format === 'bold' ? 'text-bold' : 'text-italic'} tone={ isActive ? 'info' : 'auto' }></s-icon>
+        <s-icon
+          type={format === "bold" ? "text-bold" : "text-italic"}
+          tone={isActive ? "info" : "auto"}
+        ></s-icon>
       </s-clickable>
 
       <s-tooltip id={tooltipId}>
-        <s-text>{ format === 'bold' ? 'Bold' : 'Italic' }</s-text>
+        <s-text>{format === "bold" ? "Bold" : "Italic"}</s-text>
       </s-tooltip>
-    </>
-  )
+    </s-box>
+  );
 }

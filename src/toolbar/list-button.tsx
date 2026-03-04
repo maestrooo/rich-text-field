@@ -5,8 +5,8 @@ import { type ListElement } from "~/types";
 import { isListActive, toggleList } from "~/helper/list";
 
 type ListButtonProps = {
-  listType: ListElement['listType'];
-}
+  listType: ListElement["listType"];
+};
 
 export function ListButton({ listType }: ListButtonProps) {
   const editor = useSlate();
@@ -14,27 +14,36 @@ export function ListButton({ listType }: ListButtonProps) {
   const isActive = isListActive(editor, listType) && focused;
   const tooltipId = useId();
 
-  const handleOnClick = useCallback((event: CallbackEvent<'s-clickable'>) => {
-    event.preventDefault();
-    toggleList(editor, listType);
-    ReactEditor.focus(editor);
-  }, [editor, listType]);
+  const handleOnClick = useCallback(
+    (event: CallbackEvent<"s-clickable">) => {
+      event.preventDefault();
+      toggleList(editor, listType);
+      ReactEditor.focus(editor);
+    },
+    [editor, listType],
+  );
 
   return (
-    <>
+    <s-box>
       <s-clickable
-        padding="small-300 small-400" borderRadius="base"
-        background={ isActive ? 'strong' : 'subdued' } 
+        padding="small-300 small-400"
+        borderRadius="base"
+        background={isActive ? "strong" : "subdued"}
         onClick={handleOnClick}
         interestFor={tooltipId}
-        accessibilityLabel={isActive ? 'Remove list' : 'Add list'}
+        accessibilityLabel={isActive ? "Remove list" : "Add list"}
       >
-        <s-icon type={listType === 'unordered' ? 'list-bulleted' : 'list-numbered'} tone={ isActive ? 'info' : 'auto' }></s-icon>
+        <s-icon
+          type={listType === "unordered" ? "list-bulleted" : "list-numbered"}
+          tone={isActive ? "info" : "auto"}
+        ></s-icon>
       </s-clickable>
 
       <s-tooltip id={tooltipId}>
-        <s-text>{ listType === 'unordered' ? 'Bullet list' : 'Numbered list' }</s-text>
+        <s-text>
+          {listType === "unordered" ? "Bullet list" : "Numbered list"}
+        </s-text>
       </s-tooltip>
-    </>
-  )
+    </s-box>
+  );
 }
