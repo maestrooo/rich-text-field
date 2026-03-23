@@ -56,7 +56,7 @@ export function Element({ attributes, children, element }: RenderElementProps) {
                 </s-stack>
 
                 <s-stack direction="inline" alignItems="center" gap="small-400">
-                  <s-button onClick={() => shopify.modal.show(RICH_TEXT_FIELD_LINK_MODAL_ID)} variant="secondary" icon="edit">Edit</s-button>
+                  <s-button commandFor={RICH_TEXT_FIELD_LINK_MODAL_ID} variant="secondary" icon="edit">Edit</s-button>
                   <s-button onClick={() => removeLink(editor)} variant="secondary" tone="critical" icon="delete">Delete</s-button>
                 </s-stack>
               </s-stack>

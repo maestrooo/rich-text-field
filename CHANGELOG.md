@@ -1,3 +1,10 @@
+## 2.2.0
+
+- Fix alignment on the toolbar, due to a recent change to Polaris styles.
+- Improve button appearance by using the new `<s-press-button>` Polaris component.
+- Improve user experience of formatting selection by automatically closing the popover when selecting a formatting
+- Fix a bug where the link edit modal would not show up.
+
 ## 2.1.0
 
 - Modal has been switched to Polaris Web Components. This now makes the library no longer rely on any Polaris React components.

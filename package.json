@@ -1,6 +1,6 @@
 {
   "name": "@maestrooo/rich-text-field",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A component to manage Shopify rich text field metafields.",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -32,21 +32,21 @@
   },
   "dependencies": {
     "is-hotkey-esm": "^1.0.0",
-    "slate": "0.118.1",
+    "slate": "0.123.0",
     "slate-history": "^0.113.1",
-    "slate-react": "^0.117.4"
+    "slate-react": "^0.123.0"
   },
   "devDependencies": {
     "@shopify/app-bridge-ui-types": "latest",
     "@types/is-hotkey": "^0.1.10",
-    "@types/node": "^24.8.1",
-    "@types/react": "^19.2.2",
-    "react": "^18.0.0 || ^19.0.0",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "react": "^19.2.4",
     "react-dom": "^18.0.0 || ^19.0.0",
     "rollup-plugin-postcss": "^4.0.2",
-    "tsup": "^8.5.0",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10",
-    "vitest": "^3.2.4"
+    "vite": "^8.0.1",
+    "vitest": "^4.1.0"
   }
 }

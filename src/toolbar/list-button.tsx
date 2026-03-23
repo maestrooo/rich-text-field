@@ -21,20 +21,18 @@ export function ListButton({ listType }: ListButtonProps) {
   }, [editor, listType]);
 
   return (
-    <>
-      <s-clickable
-        padding="small-300 small-400" borderRadius="base"
-        background={ isActive ? 'strong' : 'subdued' } 
+    <div>
+      <s-press-button
         onClick={handleOnClick}
         interestFor={tooltipId}
+        variant="tertiary"
         accessibilityLabel={isActive ? 'Remove list' : 'Add list'}
-      >
-        <s-icon type={listType === 'unordered' ? 'list-bulleted' : 'list-numbered'} tone={ isActive ? 'info' : 'auto' }></s-icon>
-      </s-clickable>
+        icon={listType === 'unordered' ? 'list-bulleted' : 'list-numbered'}
+      ></s-press-button>
 
       <s-tooltip id={tooltipId}>
         <s-text>{ listType === 'unordered' ? 'Bullet list' : 'Numbered list' }</s-text>
       </s-tooltip>
-    </>
+    </div>
   )
 }

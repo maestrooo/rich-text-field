@@ -11,7 +11,7 @@ type ToolbarProps = {
 export function Toolbar({ options }:  ToolbarProps) {
   return (
     <s-box padding="small-400" background="subdued" border="base" borderColor="strong" borderWidth="base base none base" borderRadius="base base none none">
-      <s-stack direction="inline" gap="small-400">
+      <s-stack direction="inline" alignItems="center" gap="small-400">
         {
           options.includes('formatting') && (
             <FormattingButton />

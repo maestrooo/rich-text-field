@@ -21,20 +21,18 @@ export function MarkButton({ format }: MarkButtonProps) {
   }, [editor, format]);
 
   return (
-    <>
-      <s-clickable 
-        padding="small-300 small-400" borderRadius="base"
-        background={ isActive ? 'strong' : 'subdued' }
+    <div>
+      <s-press-button 
         onClick={handleOnClick}
         interestFor={tooltipId}
+        variant="tertiary"
         accessibilityLabel={isActive ? 'Remove formatting' : 'Add formatting'}
-      >
-        <s-icon type={format === 'bold' ? 'text-bold' : 'text-italic'} tone={ isActive ? 'info' : 'auto' }></s-icon>
-      </s-clickable>
+        icon={format === 'bold' ? 'text-bold' : 'text-italic'}
+      ></s-press-button>
 
       <s-tooltip id={tooltipId}>
         <s-text>{ format === 'bold' ? 'Bold' : 'Italic' }</s-text>
       </s-tooltip>
-    </>
+    </div>
   )
 }

@@ -10,22 +10,20 @@ export function LinkButton() {
   const tooltipId = useId();
 
   return (
-    <>
-      <s-clickable 
-        padding="small-300 small-400" borderRadius="base"
-        background={ isActive ? 'strong' : 'subdued' }
-        accessibilityLabel="Open link modal"
+    <div>
+      <s-button
         interestFor={tooltipId}
+        variant="tertiary"
         commandFor={RICH_TEXT_FIELD_LINK_MODAL_ID}
-      >
-        <s-icon type="link" tone={ isActive ? 'info' : 'auto' }></s-icon>
-      </s-clickable>
+        accessibilityLabel="Open link modal"
+        icon="link"
+      ></s-button>
 
       <s-tooltip id={tooltipId}>
         <s-text>Link</s-text>
       </s-tooltip>
 
       <LinkModal />
-    </>
+    </div>
   );
 }
